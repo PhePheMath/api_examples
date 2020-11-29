@@ -10,7 +10,8 @@ class ApiAppScreen():
         self.options = {
             112: ('{:{}{}}'.format('BE PLENTIFUL', '^', self.x), apis.r_u_a_coach__q),
             110: ('{:{}{}}'.format('BE NICE TO YOUR CAT', '^', self.x), apis.cat_fcat),
-            107: ('{:{}{}}'.format('BE KNOWLEDGEABLE', '^', self.x), apis.a_quote)
+            107: ('{:{}{}}'.format('BE KNOWLEDGEABLE', '^', self.x), apis.a_quote),
+            114: ('{:{}{}}'.format('BE AWARE OF THE TIME', '^', self.x), apis.do_an_echo)
         }
         self.app()
 
@@ -32,12 +33,12 @@ class ApiAppScreen():
         self.current_option %= len(self.options)
 
     def choice(self, bt_num):
-        choice_made = self.options.values()[self.current_option][1]
+        choice_made = list(self.options.values())[self.current_option][1]
         if bt_num != 10:
             choice_made = self.options[bt_num][1]
         text = choice_made()
         self.display(text)
-        
+
 
     def app(self):
         while True:
@@ -60,7 +61,7 @@ class ApiAppScreen():
                 self.screen.addstr(y_axis, x_axis, option[0], curses.A_STANDOUT)
     
     def display(self, text):
-        text = text.encode(encoding='UTF-8',errors='strict')
+        # text = text.encode(encoding='UTF-8',errors='strict')
         identation = [text[i:i+self.x] for i in range(0, len(text), self.x)]
 
         self.screen.clear()
@@ -69,7 +70,7 @@ class ApiAppScreen():
 
         for index, text in enumerate(identation):
             y_axis = (self.y//2)-(len(self.options)//2-index)
-            self.screen.addstr(y_axis, 0, '{:^{}}'.format(text, self.x))
+            self.screen.addstr(y_axis, 0, '{:{}{}}'.format(text, '^',self.x))
 
             self.screen.refresh()
         self.screen.getch()

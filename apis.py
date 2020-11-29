@@ -7,7 +7,8 @@ Know your news: http://api.nytimes.com/svc/search/v2/articlesearch.json?q=obamac
 
 '''
 
-from requests import get, request
+from requests import get, post
+from datetime import datetime
 
 def r_u_a_coach__q():
     url = "https://www.affirmations.dev/"
@@ -17,7 +18,6 @@ def r_u_a_coach__q():
 def cat_fcat():
     url = "https://catfact.ninja/fact?max_length=140"
     response = get(url)
-    print(response)
     return response.json()['fact']
 
 def a_quote():
@@ -29,7 +29,17 @@ def a_quote():
         quote = 'Let them eat cake'
     return quote
 
+def do_an_echo():
+    url = "https://postman-echo.com/post"
+
+    tm = datetime.now().strftime("%H:%M:%S")
+
+    response = post(url, {'Time': f"this is {tm}"})
+
+    return response.json()['json']['Time']
+
 if __name__ == "__main__":
     print(r_u_a_coach__q())
     print(cat_fcat())
     print(a_quote())
+    print(do_an_echo())
